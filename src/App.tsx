@@ -1,4 +1,4 @@
-import React, { FC, useMemo} from 'react';
+import React, { FC, useMemo, useState} from 'react';
 import * as anchor from '@project-serum/anchor';
 import { ConnectionProvider, WalletProvider, useConnection, useAnchorWallet } from '@solana/wallet-adapter-react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
@@ -21,30 +21,33 @@ import { clusterApiUrl, Connection } from '@solana/web3.js';
 // Default styles that can be overridden by your app
 require('@solana/wallet-adapter-react-ui/styles.css');
 
-const VaultSetup = async() =>{
-	const wallet = (useAnchorWallet()) as Wallet;
-	const connection = new Connection("https://api.devnet.solana.com");
-	// Pull down the appropriate vault from the API.
-const configResponse = await fetch('https://api.castle.finance/configs')
-const vaults = (await configResponse.json()) as any[]
-const vault = vaults.find(
-	(v: any) => v.deploymentEnv == 'devnet' && v.token_label == 'USDC'
-)
-if(vault == null){
-	return;
-}
 
-
-// Create the vault client
-const vaultClient = await VaultClient.load(
-	new anchor.Provider(connection, wallet, { commitment: "processed",}),
-  vault.vault_id,
-  vault.deploymentEnv
-)
-}
 export const Vault: FC = () => {
+	const wallet = useAnchorWallet();
+	const [bal, setBal] = useState(0);
+	const [convertedBal, setConvertedBal] = useState(0);
+	const VaultSetup = (wallet: any) => {
+		const connection = new Connection("https://api.devnet.solana.com");
+		return connection.getBalance(wallet.publicKey).then(
+		function(value) {
+			return new Promise(function(resolve){
+				setBal(value/1000000000);
+				setConvertedBal(+((value/1000000000* 42.55).toFixed(2)));
+			});
+		}
+	);
+	
+}
 	return(
-		<p>Vault</p>
+		<>	
+			<button onClick={() => {VaultSetup(wallet);}}>
+				Fetch balance
+			</ button >
+				<p>
+					You have: {bal} SOL or
+					${convertedBal} USD
+				</p>
+		</>
 	)
 }
 
@@ -72,7 +75,6 @@ export const Wallet: FC = () => {
         ],
         [network]
     );
-	VaultSetup();
 
     return (
         <ConnectionProvider endpoint={endpoint}>
@@ -80,7 +82,7 @@ export const Wallet: FC = () => {
                 <WalletModalProvider>
                     <WalletMultiButton />
                     <WalletDisconnectButton />
-			<Vault/>
+			<Vault />
                     { /* Your app's components go here, nested within the context providers. */ }
                 </WalletModalProvider>
             </WalletProvider>
