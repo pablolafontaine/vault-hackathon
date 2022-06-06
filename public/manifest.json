@@ -21,5 +21,9 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+      "browser_action": {
+        "default_icon": "logo512.png",
+        "default_popup": "popup.html"
+    }
 }

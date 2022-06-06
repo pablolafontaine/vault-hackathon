@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@castlefinance/vault-sdk": "^3.1.1",
     "@solana/wallet-adapter-base": "^0.9.5",
     "@solana/wallet-adapter-react": "^0.15.5",
     "@solana/wallet-adapter-react-ui": "^0.9.7",
@@ -27,7 +28,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "./script/build.sh",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -51,5 +52,10 @@
   },
   "devDependencies": {
     "react-app-rewired": "^2.2.1"
+  },
+  "browser": {
+	"fs": false,
+	"path": false,
+	"os": false
   }
 }

@@ -1,6 +1,8 @@
-import React, { FC, useMemo } from 'react';
-import { ConnectionProvider, WalletProvider } from '@solana/wallet-adapter-react';
+import React, { FC, useMemo} from 'react';
+import * as anchor from '@project-serum/anchor';
+import { ConnectionProvider, WalletProvider, useConnection, useAnchorWallet } from '@solana/wallet-adapter-react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
+import { VaultClient, VaultConfig } from '@castlefinance/vault-sdk';
 import "./App.css";
 import {
     GlowWalletAdapter,
@@ -14,10 +16,40 @@ import {
     WalletDisconnectButton,
     WalletMultiButton
 } from '@solana/wallet-adapter-react-ui';
-import { clusterApiUrl } from '@solana/web3.js';
+import { clusterApiUrl, Connection } from '@solana/web3.js';
 
 // Default styles that can be overridden by your app
 require('@solana/wallet-adapter-react-ui/styles.css');
+
+const VaultSetup = async() =>{
+	const wallet = (useAnchorWallet()) as Wallet;
+	const connection = new Connection("https://api.devnet.solana.com");
+	// Pull down the appropriate vault from the API.
+const configResponse = await fetch('https://api.castle.finance/configs')
+const vaults = (await configResponse.json()) as any[]
+const vault = vaults.find(
+	(v: any) => v.deploymentEnv == 'devnet' && v.token_label == 'USDC'
+)
+if(vault == null){
+	return;
+}
+
+
+// Create the vault client
+const vaultClient = await VaultClient.load(
+	new anchor.Provider(connection, wallet, { commitment: "processed",}),
+  vault.vault_id,
+  vault.deploymentEnv
+)
+}
+export const Vault: FC = () => {
+	return(
+		<p>Vault</p>
+	)
+}
+
+	
+
 
 
 export const Wallet: FC = () => {
@@ -40,6 +72,7 @@ export const Wallet: FC = () => {
         ],
         [network]
     );
+	VaultSetup();
 
     return (
         <ConnectionProvider endpoint={endpoint}>
@@ -47,6 +80,7 @@ export const Wallet: FC = () => {
                 <WalletModalProvider>
                     <WalletMultiButton />
                     <WalletDisconnectButton />
+			<Vault/>
                     { /* Your app's components go here, nested within the context providers. */ }
                 </WalletModalProvider>
             </WalletProvider>
@@ -60,7 +94,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>
-	Hello, World!
+	Welcome to the Vault!
         </p>
 	      <Wallet />
       </header>
