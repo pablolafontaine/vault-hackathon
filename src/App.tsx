@@ -1,8 +1,6 @@
 import React, { FC, useMemo, useState} from 'react';
-import * as anchor from '@project-serum/anchor';
-import { ConnectionProvider, WalletProvider, useConnection, useAnchorWallet } from '@solana/wallet-adapter-react';
+import { ConnectionProvider, WalletProvider, useAnchorWallet } from '@solana/wallet-adapter-react';
 import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
-import { VaultClient, VaultConfig } from '@castlefinance/vault-sdk';
 import "./App.css";
 import {
     GlowWalletAdapter,
