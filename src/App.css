@@ -44,7 +44,6 @@ p {
 h3 {
   margin-block-start: 0em;
   margin-block-end: 0em;
-  color: #32234;
 }
 
 .App-header {
@@ -59,7 +58,7 @@ h3 {
 }
 
 .App-link {
-  color: #61dafb;
+  color: #f7717d;
 }
 
 @keyframes App-logo-spin {

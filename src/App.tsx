@@ -28,19 +28,27 @@ export const Vault: FC = () => {
 	const [convertedBal, setConvertedBal] = useState(0);
 	const [oneYearAmount, setOneYearAmount] = useState(0);
 	const [tenYearAmount, setTenYearAmount] = useState(0);
+	const [oneYearAmountConverted, setOneYearAmountConverted] = useState(0);
+	const [tenYearAmountConverted, setTenYearAmountConverted] = useState(0);
 
-	const VaultSetup = (wallet: any) => {
+	const VaultSetup = async (wallet: any) => {
 		const connection = new Connection("https://api.devnet.solana.com");
 		return connection.getBalance(wallet.publicKey).then(
 		function(value) {
 			return new Promise(function(resolve){
 				setBal(value/1000000000);
 				setConvertedBal(+((value/1000000000* 42.55).toFixed(2)));
+				setOneYearAmount(+(value/1000000000*0.0193).toFixed(5));
+				setOneYearAmountConverted(+((value/1000000000*0.0193* 42.55).toFixed(2)));
+				setTenYearAmount(+((value/1000000000)*Math.pow(1.0193, 10)).toFixed(5));
+				setTenYearAmountConverted(+(((value/1000000000*42.55)*Math.pow(1.0193, 10)).toFixed(2)));
+
 			});
 		}
 	);
 	
 }
+
 	return(
 		<>	
 			<button className="fetch-balance"  onClick={() => {VaultSetup(wallet);}}>
@@ -58,13 +66,20 @@ export const Vault: FC = () => {
 				</p>
 				
 				<h3>
-					You could make:
+					You could have:
 				</h3>
 			<p style={{marginTop: "0.2em", marginBottom: "0.2em"}}>
-					{bal} SOL or
-				${convertedBal} USD <br />
-				if you used <b> Castle Finance</b> for a year or:
+					{oneYearAmount} SOL or
+				${oneYearAmountConverted} USD <br />
+				if you used <b> Castle Finance</b> for a year
+				<h3> or: </h3>
 				</p>
+					{tenYearAmount} SOL or
+				${tenYearAmountConverted} USD <br />
+				if you used it for 10 years!
+			<a href="https://castle.finance/" className="App-link">
+					Learn more
+					</a>
 				<p>
 				</p>
 		</>
