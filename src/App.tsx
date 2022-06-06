@@ -26,6 +26,9 @@ export const Vault: FC = () => {
 	const wallet = useAnchorWallet();
 	const [bal, setBal] = useState(0);
 	const [convertedBal, setConvertedBal] = useState(0);
+	const [oneYearAmount, setOneYearAmount] = useState(0);
+	const [tenYearAmount, setTenYearAmount] = useState(0);
+
 	const VaultSetup = (wallet: any) => {
 		const connection = new Connection("https://api.devnet.solana.com");
 		return connection.getBalance(wallet.publicKey).then(
@@ -40,12 +43,29 @@ export const Vault: FC = () => {
 }
 	return(
 		<>	
-			<button onClick={() => {VaultSetup(wallet);}}>
+			<button className="fetch-balance"  onClick={() => {VaultSetup(wallet);}}>
 				Fetch balance
 			</ button >
-				<p>
-					You have: {bal} SOL or
+				<h3>
+					You have:
+				</h3>
+			<p>
+					{bal} SOL or
 					${convertedBal} USD
+				</p>
+				<p>
+				<br />
+				</p>
+				
+				<h3>
+					You could make:
+				</h3>
+			<p style={{marginTop: "0.2em", marginBottom: "0.2em"}}>
+					{bal} SOL or
+				${convertedBal} USD <br />
+				if you used <b> Castle Finance</b> for a year or:
+				</p>
+				<p>
 				</p>
 		</>
 	)
@@ -83,7 +103,6 @@ export const Wallet: FC = () => {
                     <WalletMultiButton />
                     <WalletDisconnectButton />
 			<Vault />
-                    { /* Your app's components go here, nested within the context providers. */ }
                 </WalletModalProvider>
             </WalletProvider>
         </ConnectionProvider>
@@ -95,9 +114,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-	Welcome to the Vault!
-        </p>
+        <h4>
+		Welcome to the <b>Vault</b>!
+        </h4>
 	      <Wallet />
       </header>
     </div>

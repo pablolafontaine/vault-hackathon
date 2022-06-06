@@ -12,9 +12,43 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+button {
+  margin-bottom: 1em;
+}
+b {
+  color: #de639a;
+}
+.fetch-balance {
+  background-color: #512da8;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: "DM Sans", "Roboto", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 24px;
+  border-radius: 4px;
+}
+.fetch-balance:hover {
+  background-color: #1a1f2e;
+}
+p {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+}
+h3 {
+  margin-block-start: 0em;
+  margin-block-end: 0em;
+  color: #32234;
+}
 
 .App-header {
-  background-color: #282c34;
+  background-color: #16001e;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
