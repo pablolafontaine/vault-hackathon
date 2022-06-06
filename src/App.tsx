@@ -36,8 +36,8 @@ export const Vault: FC = () => {
 			return new Promise(function(resolve){
 				setBal(value/1000000000);
 				setConvertedBal(+((value/1000000000* 42.55).toFixed(2)));
-				setOneYearAmount(+(value/1000000000*0.0193).toFixed(5));
-				setOneYearAmountConverted(+((value/1000000000*0.0193* 42.55).toFixed(2)));
+				setOneYearAmount(+(value/1000000000*1.0193).toFixed(5));
+				setOneYearAmountConverted(+((value/1000000000*1.0193* 42.55).toFixed(2)));
 				setTenYearAmount(+((value/1000000000)*Math.pow(1.0193, 10)).toFixed(5));
 				setTenYearAmountConverted(+(((value/1000000000*42.55)*Math.pow(1.0193, 10)).toFixed(2)));
 
@@ -50,7 +50,7 @@ export const Vault: FC = () => {
 	return(
 		<>	
 			<button className="fetch-balance"  onClick={() => {VaultSetup(wallet);}}>
-				Fetch balance
+				Calculate!	
 			</ button >
 				<h3>
 					You have:
