@@ -3,10 +3,6 @@ A yield calculator for the Castle Finance Vault which integrates with common cry
 
 Instructions for running the project can be seen below. 
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
