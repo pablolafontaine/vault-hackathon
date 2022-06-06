@@ -1,4 +1,4 @@
-# MLH Summer 2022 Introductory Hackathon Pod 11 Team 3
+# MLH Introductory Hackathon 22.Sum.11 Team 3
 A yield calculator for the Castle Finance Vault which integrates with common crypto wallets such as phantom. Created using React.
 
 Instructions for running the project can be seen below. 
